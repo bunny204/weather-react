@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import ".index.css";
-import "App.css";
 
 export default function Weather() {
   let [temperature, setTemperature] = useState("");
