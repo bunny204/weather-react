@@ -51,10 +51,10 @@ export default function Weather() {
       </ul>
 
       <small class="name">
-        <a href="https://github.com/bunny204/weather-react.git" target=" "> 
-           Open-source code
-        </a> 
-         by Shavondra Lynch
+        <a href="https://github.com/bunny204/weather-react.git" target=" ">
+          Open-source code
+        </a>
+        by Shavondra Lynch
       </small>
 
       <script src="src/index.js"></script>
