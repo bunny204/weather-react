@@ -1,10 +1,9 @@
-import React from "react";
-import "./App.css";
-import "Weather.js";
-
+import React, { useState } from "react";
 import axios from "axios";
+import ".index.css";
+import "App.css";
 
-export default function Weather() {
+export default function App() {
   let [temperature, setTemperature] = useState("");
   let [description, setDescription] = useState("");
   let [humidity, setHumidity] = useState("");
@@ -33,7 +32,7 @@ export default function Weather() {
   }
 
   return (
-    <div className="Weather">
+    <div className="App">
       <h1>Weather Search Engine</h1>
       <form onSubmit={handleSubmit}>
         <input
