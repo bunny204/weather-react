@@ -56,7 +56,7 @@ export default function Weather() {
         <a href="https://github.com/bunny204/weather-react.git" target=" ">
           Open-source code
         </a>
-        by Shavondra Lynch
+        , by Shavondra Lynch
       </small>
 
       <script src="src/index.js"></script>
