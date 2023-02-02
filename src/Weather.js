@@ -3,90 +3,91 @@ import axios from "axios";
 import "./Weather.css";
 import WeatherInfo from "./WeatherInfo";
 import WeatherForecast from "./WeatherForecast";
+import { ThreeCircles } from "react-loader-spinner";
 
-export default function Weather() {
-  let [temperature, setTemperature] = useState("");
-  let [description, setDescription] = useState("");
-  let [humidity, setHumidity] = useState("");
-  let [wind, setWind] = useState("");
-  let [icon, setIcon] = useState("");
-  let [city, setCity] = useState("");
+export default function Weather(props) {
+  const [city, setCity] = useState(props.defaultCity);
+  const [weatherData, setWeatherData] = useState({ loaded: false });
 
-  function showTemperature(response) {
-    setDate(response.data.time * 1000),
-    setTemperature(Math.round(response.data.main.temp));
-    setDescription(response.data.weather[0].description);
-    setHumidity(response.data.main.humidity);
-    setWind(Math.round(response.data.wind.speed));
-    setIcon(
-      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-    );
+  function handleResponse(response) {
+    setWeatherData({
+      loaded: true,
+      coordinates: response.data.coordinates,
+      city: response.data.city,
+      date: new Date(response.data.time * 1000),
+      temperature: response.data.temperature.current,
+      description: response.data.condition.description,
+      feelsLike: response.data.temperature.feels_like,
+      humidity: response.data.temperature.humidity,
+      wind: response.data.wind.speed,
+      icon: response.data.condition.icon_url,
+    });
   }
+
   function handleSubmit(event) {
     event.preventDefault();
-    let apiKey = "e9ebedb4bfa99ca278a76b676b4da9da";
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
-    axios.get(url).then(showTemperature);
+    search();
   }
 
-  function changeCity(event) {
+  function search() {
+    let apiKey = "f10daba5t5ce3fc3ed35o46ebd038a42";
+    let unit = "imperial";
+    let url = `https://api.shecodes.io/weather/v1/current?query=${city}&units=${unit}&key=${apiKey}`;
+    axios.get(url).then(handleResponse);
+  }
+
+  function handleCityChange(event) {
     setCity(event.target.value);
   }
 
-  return (
-    <div className="Weather">
-      <h1>New York</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="search"
-          placeholder="Enter a city..."
-          onChange={changeCity}
-        ></input>
-        <input
-          type="submit"
-          value="Search"
-          className="btn btn-primary w-100"
-        ></input>
-      </form>
-      <ul>
-        <li>Temperature: {temperature}°F</li>
-        <li>Description: {description}</li>
-        <li>Humidity: {humidity}%</li>
-        <li>Wind: {wind}km/h</li>
-        <li>
-          <img src={icon} alt="weather icon" />
-        </li>
-      </ul>
-      <div className="row">
-        <div className="col-6">
-          <img
-            src="https://ssl.gstatic.com/onebox/weather/64/cloudy.png"
-            alt="cloudy"
-          />{" "}
-          39°F
-        </div>
-        <div className="col-6">
-          <ul>
-            <li>Precipitation: 90%</li>
-            <li>Humidity: 73%</li>
-            <li>Wind: 10 MPH </li>
-          </ul>
-        </div>
+  if (weatherData.loaded) {
+    return (
+      <div className="Weather">
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col-sm-9">
+              <input
+                type="search"
+                placeholder="Type a city..."
+                className="form-control"
+                autoComplete="off"
+                autoFocus="on"
+                onChange={handleCityChange}
+              />
+            </div>
+            <div className="col-sm-3">
+              <input
+                type="submit"
+                value="Search"
+                className="btn btn-primary w-100"
+              />
+            </div>
+          </div>
+        </form>
+        <WeatherInfo data={weatherData} />
+        <WeatherForecast coordinates={weatherData.coordinates} />
       </div>
-      <footer>
-        <small class="name">
-          <a
-            href="https://github.com/bunny204/weather-react.git"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Open-source code
-          </a>
-          , by Shavondra Lynch
-        </small>
-      </footer>
+    );
+  } else {
+    search();
 
-      <script src="src/index.js"></script>
-    </div>
-  );
+    return (
+      <div>
+        <h2>Searching...</h2>
+        <ThreeCircles
+          height="100"
+          width="100"
+          color="#4fa94d"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="three-circles-rotating"
+          outerCircleColor=""
+          innerCircleColor=""
+          middleCircleColor=""
+        />
+      </div>
+    );
+  }
 }
+
