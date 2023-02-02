@@ -38,7 +38,7 @@ export default function Weather() {
           placeholder="Enter a city..."
           onChange={changeCity}
         ></input>
-        <input type="submit" value="Search"></input>
+        <input type="submit" value="Search" className="btn btn-primary"></input>
       </form>
       <ul>
         <li>Temperature: {temperature}°F</li>
@@ -49,6 +49,22 @@ export default function Weather() {
           <img src={icon} alt="weather icon" />
         </li>
       </ul>
+      <div className="row">
+        <div className="col-6">
+          <img
+            src="https://ssl.gstatic.com/onebox/weather/64/cloudy.png"
+            alt="cloudy"
+          />{" "}
+          39°F
+        </div>
+        <div className="col-6">
+          <ul>
+            <li>Precipitation: 90%</li>
+            <li>Humidity: 73%</li>
+            <li>Wind: 10 MPH </li>
+          </ul>
+        </div>
+      </div>
 
       <small class="name">
         <a
