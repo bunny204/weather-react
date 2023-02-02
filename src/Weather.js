@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./Weather.css";
 
 export default function Weather() {
   let [temperature, setTemperature] = useState("");
@@ -31,14 +32,18 @@ export default function Weather() {
 
   return (
     <div className="Weather">
-      <h1>Weather Search Engine</h1>
+      <h1>New York</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="search"
           placeholder="Enter a city..."
           onChange={changeCity}
         ></input>
-        <input type="submit" value="Search" className="btn btn-primary"></input>
+        <input
+          type="submit"
+          value="Search"
+          className="btn btn-primary w-100"
+        ></input>
       </form>
       <ul>
         <li>Temperature: {temperature}°F</li>
@@ -65,17 +70,18 @@ export default function Weather() {
           </ul>
         </div>
       </div>
-
-      <small class="name">
-        <a
-          href="https://github.com/bunny204/weather-react.git"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Open-source code
-        </a>
-        , by Shavondra Lynch
-      </small>
+      <footer>
+        <small class="name">
+          <a
+            href="https://github.com/bunny204/weather-react.git"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Open-source code
+          </a>
+          , by Shavondra Lynch
+        </small>
+      </footer>
 
       <script src="src/index.js"></script>
     </div>
