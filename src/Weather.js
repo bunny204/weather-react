@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Weather.css";
+import WeatherInfo from "./WeatherInfo";
+import WeatherForecast from "./WeatherForecast";
 
 export default function Weather() {
   let [temperature, setTemperature] = useState("");
@@ -11,6 +13,7 @@ export default function Weather() {
   let [city, setCity] = useState("");
 
   function showTemperature(response) {
+    setDate(response.data.time * 1000),
     setTemperature(Math.round(response.data.main.temp));
     setDescription(response.data.weather[0].description);
     setHumidity(response.data.main.humidity);
